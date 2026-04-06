@@ -1,5 +1,4 @@
-#this is comment
-
+#import useful libraries
 import imaplib
 import email
 from email.header import decode_header, make_header
