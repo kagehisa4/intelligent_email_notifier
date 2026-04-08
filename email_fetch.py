@@ -9,22 +9,23 @@ import re
 #This is optional only if you want to know the time requried to loop through the process.
 #start = time.time()
 
-# Input credentials to log into your email.
+# Provide credentials to log into your email.
 EMAIL= str(input('Enter your EMAIL: '))
 PASSWORD = str(input('Enter your 16 letter IMAP login code: '))
 SERVER = 'imap.gmail.com'
 
-# Standard IMAP output is UTF-8 ENCODED.
+# converts encoded ASCII (emojis, etc) into UTF-8 human readable.
 # Use decode_text() to ASCII standrd text.
 def decode_text(text):
     if not text:
         return ""
     return str(make_header(decode_header(text)))
 
-#This decodes the sender as it is not present in HEADER.
+#This decodes the sender as it is present inside < > literals  in HEADER.
 def clean_sender(sender):
     match = re.search(r'<(.+?)>', sender)
-    return match.group(1) if match else sender
+    return match.group(1) if match 
+    else sender # this ensures if literal '< >' is absent in the IMAP Header.
 
 
 #CONNECT TO IAMP SERVER VIA SECURE SOCKETS LAYER (YOU CAN ALSO USE HTTPS)
@@ -45,8 +46,8 @@ mail_ids = data[0].split()
 
 rows = []
 
-print("Login successfull")
-print(f"Total mails: {len(mail_ids)} ")
+#print("Login successfull")
+#print(f"Total mails: {len(mail_ids)} ")
 
 for i in mail_ids:
     status, msg_data = mail.fetch(i, '(BODY.PEEK[HEADER.FIELDS (FROM SUBJECT)] FLAGS)')
